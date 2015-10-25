@@ -52,8 +52,8 @@ document.addEventListener("DOMContentLoaded", function() {
         __changeBy = 1;
     });
 
-    window.addEventListener("keypress", function(e) {
-        if (e.key === " ") __paused = !__paused;
+    window.addEventListener("keydown", function(e) {
+        if (e.key && e.key === " " || e.charCode === 20) __paused = !__paused;
     });
 
     function init() {
