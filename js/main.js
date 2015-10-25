@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function() {
         for (var y=0; y < board.height; ++y) {
             for (var x=0; x < board.width; ++x) {
                 if (board.getCell(y, x)) {
-                    context.fillStyle = "rebeccapurple";
+                    context.fillStyle = __paused ? "tomato" : "rebeccapurple";
                     context.fillRect(rect.width * x, rect.height * y, rect.width, rect.height);
                 }
                 context.strokeRect(rect.width * x, rect.height * y, rect.width, rect.height);
