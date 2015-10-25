@@ -2,7 +2,8 @@
 /* globals document, window*/
 
 var __updateEvery = 0.20,
-    __changeBy = 0;
+    __changeBy = 0,
+    __paused = false;
 
 document.addEventListener("DOMContentLoaded", function() {
     var canvas, context, lastCall;
@@ -52,6 +53,10 @@ document.addEventListener("DOMContentLoaded", function() {
         __changeBy = 1;
     });
 
+    window.addEventListener("keypress", function(e) {
+        if (e.key === " ") __paused = !__paused;
+    });
+
     function init() {
         canvas = document.createElement("canvas");
         canvas.width = window.innerWidth;
@@ -83,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function update(dt) {
         if (interval >= __updateEvery + __changeBy) {
-            updateBoard();
+            if(!__paused) updateBoard();
             interval = 0;
             __changeBy = 0;
         }
