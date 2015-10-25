@@ -9,14 +9,13 @@ document.addEventListener("DOMContentLoaded", function() {
     var canvas, context, lastCall;
     var interval = 0;
     var board = {
-        width: 10,
-        height: 10,
+        size: 20,
         map: [],
         getCell: function(y, x) {
-            return this.map[y * this.height + x];
+            return this.map[y * this.size + x];
         },
         setCell: function(y, x, v) {
-            this.map[y * this.height + x] = v;
+            this.map[y * this.size + x] = v;
         },
         getAliveNeighbors: function(y, x) {
             var total = 0;
@@ -25,14 +24,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (i === 0 && j === 0) continue;
                     var ny = y + i;
                     var nx = x + j;
-                    if (ny < 0 || nx < 0 || ny >= this.height || nx >= this.width) continue;
+                    if (ny < 0 || nx < 0 || ny >= this.size || nx >= this.size) continue;
                     total += this.getCell(ny, nx) ? 1 : 0;
                 }
             }
             return total;
         }
     };
-    board.tsize = board.width * board.height;
+    board.tsize = board.size * board.size;
 
     window.addEventListener("resize", function() {
         canvas.width = window.innerWidth;
@@ -44,8 +43,8 @@ document.addEventListener("DOMContentLoaded", function() {
         var y = e.clientY - r.top;
         var x = e.clientX - r.left;
         var rect = {
-            width: canvas.width / board.width,
-            height: canvas.height / board.height
+            width: canvas.width / board.size,
+            height: canvas.height / board.size
         };
         var boardY = ~~(y / rect.height);
         var boardX = ~~(x / rect.width);
@@ -71,8 +70,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function updateBoard() {
         var newMap = [];
-        for (var y=0; y < board.height; ++y) {
-            for (var x=0; x < board.width; ++x) {
+        for (var y=0; y < board.size; ++y) {
+            for (var x=0; x < board.size; ++x) {
                 var cellIsAlive = board.getCell(y, x);
                 var neighbors = board.getAliveNeighbors(y, x);
                 if (cellIsAlive) {
@@ -99,11 +98,11 @@ document.addEventListener("DOMContentLoaded", function() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.beginPath();
         var rect = {
-            width: canvas.width / board.width,
-            height: canvas.height / board.height
+            width: canvas.width / board.size,
+            height: canvas.height / board.size
         };
-        for (var y=0; y < board.height; ++y) {
-            for (var x=0; x < board.width; ++x) {
+        for (var y=0; y < board.size; ++y) {
+            for (var x=0; x < board.size; ++x) {
                 if (board.getCell(y, x)) {
                     context.fillStyle = __paused ? "tomato" : "rebeccapurple";
                     context.fillRect(rect.width * x, rect.height * y, rect.width, rect.height);
