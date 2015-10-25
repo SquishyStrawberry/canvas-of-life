@@ -53,7 +53,8 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     window.addEventListener("keydown", function(e) {
-        if (e.key && e.key === " " || e.charCode === 20) __paused = !__paused;
+        var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+        if (key === " ".charCodeAt(0)) __paused = !__paused;
     });
 
     function init() {
