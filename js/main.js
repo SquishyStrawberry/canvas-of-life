@@ -49,12 +49,15 @@ document.addEventListener("DOMContentLoaded", function() {
         var boardY = ~~(y / rect.height);
         var boardX = ~~(x / rect.width);
         board.setCell(boardY, boardX, !board.getCell(boardY, boardX));
-        __changeBy = 1;
+        if (!__paused) __changeBy = 1;
     });
 
     window.addEventListener("keydown", function(e) {
         var key = e.char ? e.char.charCodeAt(0) : e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
-        if (key === " ".charCodeAt(0)) __paused = !__paused;
+        if (key === " ".charCodeAt(0)) {
+            __paused = !__paused;
+            if (!__paused) interval = 0;
+        }
     });
 
     function init() {
