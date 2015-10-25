@@ -99,8 +99,11 @@ document.addEventListener("DOMContentLoaded", function() {
         };
         for (var y=0; y < board.height; ++y) {
             for (var x=0; x < board.width; ++x) {
-                var method = board.getCell(y, x) ? context.fillRect : context.strokeRect;
-                method.call(context, rect.width * x, rect.height * y, rect.width, rect.height);
+                if (board.getCell(y, x)) {
+                    context.fillStyle = "rebeccapurple";
+                    context.fillRect(rect.width * x, rect.height * y, rect.width, rect.height);
+                }
+                context.strokeRect(rect.width * x, rect.height * y, rect.width, rect.height);
             }
         }
         context.stroke();
